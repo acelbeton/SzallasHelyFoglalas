@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    android:id="@+id/adder"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="@android:color/white"
+            app:theme="@style/ToolbarTheme"/>
+
+        <EditText
+            android:id="@+id/editTextCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <EditText
+            android:id="@+id/editTextStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Street"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <EditText
+            android:id="@+id/editPropertyType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apartment"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <EditText
+            android:id="@+id/etPricePerNight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price per Night"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <EditText
+            android:id="@+id/etMaxGuests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Guests"
+            android:inputType="number"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <ImageView
+            android:id="@+id/imageProperty"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:layout_marginTop="@dimen/element_spacing"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="@dimen/element_spacing"
+            android:layout_marginBottom="@dimen/element_spacing"/>
+
+    </LinearLayout>
+</ScrollView>
