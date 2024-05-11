@@ -1,14 +1,9 @@
 package com.example.szallashelyfoglalas;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,25 +15,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.szallashelyfoglalas.adapter.MainPropertyAdapter;
-import com.example.szallashelyfoglalas.handler.PropertyHandler;
-import com.example.szallashelyfoglalas.handler.UserHandler;
-import com.example.szallashelyfoglalas.model.Property;
+import com.example.szallashelyfoglalas.dao.UserDao;
 import com.example.szallashelyfoglalas.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 NotificationHelper notificationHelper = new NotificationHelper(this);
                 notificationHelper.send("Welcome to our Booking App!");
             } else {
-                // Permission was denied, handle the feature without notification
+                // Permission was denied
             }
         }
     }
@@ -134,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            UserHandler.readForId(userId)
+            UserDao.readForId(userId)
                     .addOnSuccessListener(documentSnapshot -> {
                         User user = documentSnapshot.toObject(User.class);
                         if (user != null) {

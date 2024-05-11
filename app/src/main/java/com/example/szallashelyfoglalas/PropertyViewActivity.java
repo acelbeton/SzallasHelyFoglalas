@@ -16,7 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.szallashelyfoglalas.handler.PropertyHandler;
+import com.example.szallashelyfoglalas.dao.PropertyDao;
 import com.example.szallashelyfoglalas.model.Property;
 import com.example.szallashelyfoglalas.util.ServerUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,7 +102,7 @@ public class PropertyViewActivity extends AppCompatActivity {
 
         String propertyId = getIntent().getStringExtra("propertyId");
 
-        PropertyHandler.readById(propertyId)
+        PropertyDao.readById(propertyId)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 for (DocumentSnapshot document : task.getResult()) {

@@ -1,37 +1,26 @@
-package com.example.szallashelyfoglalas.handler;
+package com.example.szallashelyfoglalas.dao;
 
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.example.szallashelyfoglalas.model.Booking;
-import com.example.szallashelyfoglalas.model.Picture;
-import com.example.szallashelyfoglalas.model.Property;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.storage.FirebaseStorage;
 
-import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.ZoneId;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class BookingHandler {
+public class BookingDao {
     private static final String collection = "Booking";
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -97,14 +86,6 @@ public class BookingHandler {
                 .set(booking);
     }
 
-
-
-    public static Task<QuerySnapshot> readByLoggedInUser(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        return db.collection(collection)
-                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .get();
-    }
     public static Task<QuerySnapshot> readAll(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db.collection(collection)

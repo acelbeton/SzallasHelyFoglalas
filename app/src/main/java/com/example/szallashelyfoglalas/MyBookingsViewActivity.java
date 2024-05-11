@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.os.Bundle;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,11 +29,10 @@ import com.example.szallashelyfoglalas.model.Booking;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.example.szallashelyfoglalas.handler.BookingHandler;
+import com.example.szallashelyfoglalas.dao.BookingDao;
 
 public class MyBookingsViewActivity extends AppCompatActivity implements BookingAdapter.OnBookingListener {
 
@@ -131,7 +127,7 @@ public class MyBookingsViewActivity extends AppCompatActivity implements Booking
     private void loadBookings() {
         progressBar.setVisibility(View.VISIBLE);
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        BookingHandler.fetchBookingsByUser(currentUserId).addOnCompleteListener(new OnCompleteListener<List<Booking>>() {
+        BookingDao.fetchBookingsByUser(currentUserId).addOnCompleteListener(new OnCompleteListener<List<Booking>>() {
             @Override
             public void onComplete(@NonNull Task<List<Booking>> task) {
                 progressBar.setVisibility(View.GONE);
@@ -156,7 +152,7 @@ public class MyBookingsViewActivity extends AppCompatActivity implements Booking
 
     @Override
     public void onDeleteClicked(Booking booking) {
-        BookingHandler.delete(booking)
+        BookingDao.delete(booking)
                 .addOnSuccessListener(aVoid -> {
                     int index = bookingList.indexOf(booking);
                     if (index != -1) {

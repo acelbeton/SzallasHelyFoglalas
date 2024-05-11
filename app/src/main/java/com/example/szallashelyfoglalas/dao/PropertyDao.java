@@ -1,20 +1,14 @@
-package com.example.szallashelyfoglalas.handler;
+package com.example.szallashelyfoglalas.dao;
 
-import com.example.szallashelyfoglalas.model.Picture;
 import com.example.szallashelyfoglalas.model.Property;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.CollectionReference;
 
-import java.util.Map;
 import java.util.Objects;
 
-public class PropertyHandler {
+public class PropertyDao {
     private static final String collection = "Property";
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -52,7 +46,7 @@ public class PropertyHandler {
     public static void delete(Property model){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         if(!Objects.equals(model.getImageId(), "")){
-            PictureHandler.delete(model.getImageId());
+            PictureDao.delete(model.getImageId());
         }
         db.collection(collection).document(model.getPropertyId()).delete().addOnFailureListener(Throwable::printStackTrace);
     }

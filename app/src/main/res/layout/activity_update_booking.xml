@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:hint="Total Price"
             android:inputType="numberDecimal"
+            android:enabled="false"
             android:layout_marginTop="@dimen/small_margin"/>
 
         <Button

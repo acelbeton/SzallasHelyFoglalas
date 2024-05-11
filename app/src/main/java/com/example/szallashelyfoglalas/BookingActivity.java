@@ -131,7 +131,6 @@ public class BookingActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Month is zero based, add 1 for correct display
                         String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth);
                         editTextStartDate.setText(date);
                     }
@@ -149,7 +148,6 @@ public class BookingActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Month is zero based, add 1 for correct display
                         String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth);
                         editTextEndDate.setText(date);
                     }

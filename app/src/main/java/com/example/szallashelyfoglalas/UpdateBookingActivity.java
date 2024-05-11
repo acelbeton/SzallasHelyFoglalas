@@ -18,18 +18,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.szallashelyfoglalas.R;
 import com.example.szallashelyfoglalas.model.Booking;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.example.szallashelyfoglalas.handler.BookingHandler;
+import com.example.szallashelyfoglalas.dao.BookingDao;
 import org.threeten.bp.format.DateTimeParseException;
 
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.temporal.ChronoUnit;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class UpdateBookingActivity extends AppCompatActivity {
     @Override
@@ -100,7 +98,6 @@ public class UpdateBookingActivity extends AppCompatActivity {
         editTotalPrice = findViewById(R.id.editTotalPrice);
         btnUpdateBooking = findViewById(R.id.btnUpdateBooking);
 
-        // Assume bookingId is passed via intent
         bookingId = getIntent().getStringExtra("bookingId");
         loadBookingData();
 
@@ -120,7 +117,6 @@ public class UpdateBookingActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (datePicker, year1, monthOfYear, dayOfMonth) -> {
-                    // Month is zero-based, add 1 for correct display
                     String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, monthOfYear + 1, dayOfMonth);
                     editStartDate.setText(date);
                 }, year, month, day);
@@ -135,7 +131,6 @@ public class UpdateBookingActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (datePicker, year1, monthOfYear, dayOfMonth) -> {
-                    // Month is zero-based, add 1 for correct display
                     String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, monthOfYear + 1, dayOfMonth);
                     editEndDate.setText(date);
                 }, year, month, day);
@@ -143,7 +138,7 @@ public class UpdateBookingActivity extends AppCompatActivity {
     }
 
     private void loadBookingData() {
-        BookingHandler.readById(bookingId)
+        BookingDao.readById(bookingId)
                 .addOnSuccessListener(booking -> {
                     if (booking != null) {
                         propertyId = booking.getPropertyId();
@@ -179,16 +174,19 @@ public class UpdateBookingActivity extends AppCompatActivity {
             return;
         }
 
+        long days = ChronoUnit.DAYS.between(startDate, endDate);
+        double totalPrice = days * Double.parseDouble(editTotalPrice.getText().toString());
+
         Booking booking = new Booking();
         booking.setBookingId(bookingId);
         booking.setStartDate(startDate);
         booking.setEndDate(endDate);
         booking.setGuestCount(Integer.parseInt(editGuestCount.getText().toString()));
-        booking.setTotalPrice(Double.parseDouble(editTotalPrice.getText().toString()));
+        booking.setTotalPrice(totalPrice);
         booking.setUserId(userId);
         booking.setPropertyId(propertyId);
 
-        BookingHandler.update(booking)
+        BookingDao.update(booking)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Booking updated successfully", Toast.LENGTH_SHORT).show();
                     finish();

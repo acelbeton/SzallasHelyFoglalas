@@ -1,26 +1,20 @@
-package com.example.szallashelyfoglalas.handler;
+package com.example.szallashelyfoglalas.dao;
 
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
 import com.example.szallashelyfoglalas.model.Picture;
-import com.example.szallashelyfoglalas.model.Property;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.Map;
 import java.util.Objects;
 
-public class PictureHandler {
+public class PictureDao {
 
     private static final String collection = "Picture";
 

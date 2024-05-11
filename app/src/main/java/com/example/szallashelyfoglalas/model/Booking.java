@@ -9,7 +9,6 @@ public class Booking {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalPrice;
-
     private int guestCount;
 
     public Booking() {

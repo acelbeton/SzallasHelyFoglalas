@@ -29,8 +29,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.szallashelyfoglalas.handler.PictureHandler;
-import com.example.szallashelyfoglalas.handler.PropertyHandler;
+import com.example.szallashelyfoglalas.dao.PictureDao;
+import com.example.szallashelyfoglalas.dao.PropertyDao;
 import com.example.szallashelyfoglalas.model.Picture;
 import com.example.szallashelyfoglalas.util.ServerUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -152,7 +152,7 @@ public class PropertyAddActivity extends AppCompatActivity {
             newPicture.setExtension(getFileExtension(imageUri));
             newPicture.setUploader(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-            PictureHandler.create(newPicture, imageUri, this, new PictureHandler.PictureUploadCallback() {
+            PictureDao.create(newPicture, imageUri, this, new PictureDao.PictureUploadCallback() {
                 @Override
                 public void onUploadSuccess(String imageId) {
                     currentProperty.setImageId(imageId);
@@ -170,7 +170,7 @@ public class PropertyAddActivity extends AppCompatActivity {
     }
 
     private void savePropertyToFirestore() {
-        PropertyHandler.create(currentProperty).addOnCompleteListener(task -> {
+        PropertyDao.create(currentProperty).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Property and image saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
