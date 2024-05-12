@@ -22,6 +22,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.szallashelyfoglalas.dao.BookingDao;
 import com.example.szallashelyfoglalas.model.Booking;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
@@ -128,12 +129,9 @@ public class BookingActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth);
-                        editTextStartDate.setText(date);
-                    }
+                (view1, year1, month1, dayOfMonth) -> {
+                    String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, month1 + 1, dayOfMonth);
+                    editTextStartDate.setText(date);
                 }, year, month, day);
         datePickerDialog.show();
     }
@@ -145,12 +143,9 @@ public class BookingActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth);
-                        editTextEndDate.setText(date);
-                    }
+                (view1, year1, month1, dayOfMonth) -> {
+                    String date = String.format(Locale.getDefault(), "%d-%02d-%02d", year1, month1 + 1, dayOfMonth);
+                    editTextEndDate.setText(date);
                 }, year, month, day);
         datePickerDialog.show();
     }
@@ -186,8 +181,8 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void saveBookingToFirestore(Booking booking) {
-        db.collection("Booking").document(booking.getBookingId()).set(booking).
-                addOnSuccessListener(aVoid -> {
+        BookingDao.create(booking)
+                .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Booking saved successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 })
@@ -195,5 +190,6 @@ public class BookingActivity extends AppCompatActivity {
                     Toast.makeText(this, "Error saving booking", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 }

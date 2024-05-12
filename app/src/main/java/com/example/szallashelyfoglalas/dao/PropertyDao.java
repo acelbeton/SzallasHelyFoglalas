@@ -10,14 +10,7 @@ import java.util.Objects;
 
 public class PropertyDao {
     private static final String collection = "Property";
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static Task<QuerySnapshot> readByLoggedInUser(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        return db.collection(collection)
-                .whereEqualTo("ownerId", FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .get();
-    }
     public static Task<QuerySnapshot> readAll(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db.collection(collection)

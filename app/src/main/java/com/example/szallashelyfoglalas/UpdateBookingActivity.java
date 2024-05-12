@@ -101,12 +101,7 @@ public class UpdateBookingActivity extends AppCompatActivity {
         bookingId = getIntent().getStringExtra("bookingId");
         loadBookingData();
 
-        btnUpdateBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateBooking();
-            }
-        });
+        btnUpdateBooking.setOnClickListener(v -> updateBooking());
     }
 
     public void showStartDatePickerDialog(View view) {

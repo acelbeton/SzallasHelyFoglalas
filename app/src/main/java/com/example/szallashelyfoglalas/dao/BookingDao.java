@@ -23,8 +23,6 @@ import java.util.Map;
 public class BookingDao {
     private static final String collection = "Booking";
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     public static Task<List<Booking>> fetchBookingsByUser(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         TaskCompletionSource<List<Booking>> taskCompletionSource = new TaskCompletionSource<>();

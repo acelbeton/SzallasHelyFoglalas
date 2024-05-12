@@ -94,9 +94,6 @@ public class NotificationHelper {
         }
     }
 
-
-
-
     public void cancel() {
         mNotifyManager.cancel(NOTIFICATION_ID);
     }

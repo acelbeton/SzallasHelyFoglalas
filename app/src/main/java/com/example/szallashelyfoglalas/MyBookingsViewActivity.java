@@ -127,25 +127,22 @@ public class MyBookingsViewActivity extends AppCompatActivity implements Booking
     private void loadBookings() {
         progressBar.setVisibility(View.VISIBLE);
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        BookingDao.fetchBookingsByUser(currentUserId).addOnCompleteListener(new OnCompleteListener<List<Booking>>() {
-            @Override
-            public void onComplete(@NonNull Task<List<Booking>> task) {
-                progressBar.setVisibility(View.GONE);
-                if (task.isSuccessful()) {
-                    bookingList.clear();
-                    bookingList.addAll(task.getResult());
-                    if (bookingList.isEmpty()) {
-                        tvEmpty.setText("No bookings found.");
-                        tvEmpty.setVisibility(View.VISIBLE);
-                    } else {
-                        tvEmpty.setVisibility(View.GONE);
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Log.e("MyBookingsViewActivity", "Error getting bookings: ", task.getException());
-                    tvEmpty.setText("Failed to load bookings.");
+        BookingDao.fetchBookingsByUser(currentUserId).addOnCompleteListener(task -> {
+            progressBar.setVisibility(View.GONE);
+            if (task.isSuccessful()) {
+                bookingList.clear();
+                bookingList.addAll(task.getResult());
+                if (bookingList.isEmpty()) {
+                    tvEmpty.setText("No bookings found.");
                     tvEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    tvEmpty.setVisibility(View.GONE);
                 }
+                adapter.notifyDataSetChanged();
+            } else {
+                Log.e("MyBookingsViewActivity", "Error getting bookings: ", task.getException());
+                tvEmpty.setText("Failed to load bookings.");
+                tvEmpty.setVisibility(View.VISIBLE);
             }
         });
     }

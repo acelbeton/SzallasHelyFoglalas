@@ -198,8 +198,6 @@ public class RegisterActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        } else {
-            // TODO: Show error message
         }
     }
 }
